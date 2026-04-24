@@ -5,12 +5,12 @@ class Point:
         self.__x=int(x)
         self.__y=int(y)
     def read(self):
-        data= input("Nhập 2 số tọa độ x và y(cách nhau bởi khoảng trắng: )").split()
+        data= input().split()
         if len(data)>=2:
             self.__x=int(data[0])
             self.__y=int(data[1])
     def print(self):
-        return f'({self.__x},{self.__y})'
+        return f'({self.__x}, {self.__y})'
     def move(self, dx,dy):
         self.__x=self.__x+int(dx)
         self.__y=self.__y+int(dy)
@@ -21,13 +21,13 @@ class Point:
     def distance(self):
         #Vì khoảng cách đến gốc tọa độ tương đương căn bậc 2 của tổng x bình phương và y bình phương
         dis= math.sqrt(self.__x**2+self.__y**2)
-        return {f'{dis:.2f}'}
+        return {f'{dis:.1f}'}
     def distance_to_point(self,P):
         #Với P là một điểm thuộc class point được tạo sau
         x1= P.getX()- self.__x
         y1=P.getY()-self.__y
         dis1=math.sqrt(x1**2+y1**2)
-        return f'{dis1:.2f}'
+        return f'{dis1:.1f}'
 class LineSegment:
     def __init__(self, *args):
         if len(args)==0:
@@ -50,7 +50,30 @@ class LineSegment:
             d1= Point(data[0],data[1])
             d2= Point(data[2],data[3])
     def print(self):
-        print( f'[{self.__d1.print()}, {self.__d2.print()}]')
+        print( f'[{self.__d1.print()}; {self.__d2.print()}]')
     
-l1=LineSegment(4,5,6,7)
-l1.print()
+    def move(self,dx,dy):
+        self.d1.move(dx,dy)
+        self.d2.move(dx,dy)
+    def length(self) :
+        #Khi bạn gọi self.__d1.distance(self.__d2), máy tính sẽ thực hiện việc tính toán khoảng cách,
+        # nhưng vì không có lệnh return, kết quả tính được sẽ bị vứt bỏ đi.
+        # Lúc này, nếu bạn in độ dài của đoạn thẳng ra, kết quả nhận được sẽ là None.
+        return self.__d1.distance_to_point(self.__d2)
+    def angle(self):
+        dx=self.__d2.getX()-self.__d1.getX()
+        dy=self.__d2.getY()-self.__d1.getY()
+        
+        rad=math.atan2(dy,dx)
+        
+        degree= math.degrees(rad)
+        #Hàm atan2 có thể trả về số âm 
+        # (ví dụ: góc hướng xuống dưới trả về -90 thay vì 270).
+        # Phép toán này tịnh tiến các góc âm thành góc dương tương ứng trên vòng tròn lượng giác.
+        deg_plus=(degree+360)%360
+        # Làm tròn đến số nguyên gần nhất
+        #360 % 360 kết quả sẽ là 0, 45%360=45
+        # Sử dụng thêm % 360 một lần nữa để phòng trường hợp làm tròn lên thành 360 (ví dụ 359.6 -> 360 -> 0)
+        final_angle = round(deg_plus) % 360
+        
+        return int(final_angle)
