@@ -6,7 +6,7 @@ class Point:
         self.__y = int(y)
         
     def read(self):
-        data = input("Nhập 2 số tọa độ x và y (cách nhau bởi khoảng trắng): ").split()
+        data = input().split()
         if len(data) >= 2:
             self.__x = int(data[0])
             self.__y = int(data[1])
@@ -33,23 +33,19 @@ class Point:
         return math.sqrt(x1**2 + y1**2)
 
 class PointTest:
-    @staticmethod
+    @staticmethod # Để có thể gọi phương thức này mà không cần tạo đối tượng của lớp PointTest
     def main():
         A = Point(3, 4)
-        print("Tọa độ điểm A: ", end="")
         A.print()
         
         B = Point()
         B.read()
-        print("Tọa độ điểm B: ", end="")
         B.print()
-        
+    
         C = Point(-B.getX(), -B.getY())
-        print("Tọa độ điểm C (đối xứng B): ", end="")
         C.print()
-        
-        print(f"Khoảng cách từ B đến O: {B.distance():.2f}")
-        print(f"Khoảng cách từ A đến B: {A.distance_to_point(B):.2f}")
+        B.distance()
+        A.distance_to_point(B)
 
 if __name__ == '__main__':
     PointTest.main()
