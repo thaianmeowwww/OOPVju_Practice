@@ -53,9 +53,9 @@ class LineSegment:
         print( f'[{self.__d1.print()}; {self.__d2.print()}]')
     
     def move(self,dx,dy):
-        self.d1.move(dx,dy)
-        self.d2.move(dx,dy)
-    def length(self) :
+        self.__d1.move(dx,dy)
+        self.__d2.move(dx,dy)
+    def length(self) :#góc giữa đường d1d2 và trục hoành
         #Khi bạn gọi self.__d1.distance(self.__d2), máy tính sẽ thực hiện việc tính toán khoảng cách,
         # nhưng vì không có lệnh return, kết quả tính được sẽ bị vứt bỏ đi.
         # Lúc này, nếu bạn in độ dài của đoạn thẳng ra, kết quả nhận được sẽ là None.
